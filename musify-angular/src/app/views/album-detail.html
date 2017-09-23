@@ -1,0 +1,104 @@
+<div *ngIf="identity && album" class="central col-lg-12 text-center">
+	
+  <h1>
+    {{title}}
+  </h1>
+
+  	<!-- Formulario-->
+	<div class="col-sm-12">
+	
+		<div *ngIf="alertMessage">
+	     
+	    	<div class="alert alert-info">
+	     
+	    	{{alertMessage}}
+	   
+	    	</div>
+	      
+	    </div>
+
+	</div>
+
+	<div class="clearfix">
+    
+	</div>
+
+	<div class="artists col-sm-12 col-md-12 col-lg-12" *ngIf="identity">
+
+		<img *ngIf="album.image != 'null'" src="{{url + 'get_image_album/' + album.image}}" class="artistImage">
+
+	  	<h1> {{album.title}} ({{album.year}}) </h1>
+	  	<h3> {{album.description}} </h3>
+
+	  </div>
+
+  	<div class="col-sm-12 col-md-12 col-lg-12">
+          
+    	<a [routerLink]="['/song-add',album._id]" *ngIf="identity && user.role == 'ROLE_ADMIN'" class="btn btn-success">
+
+        <span class="glyphicon glyphicon-add" aria-hidden="true">
+        </span>
+        Añadir canción
+
+     	</a>
+
+	</div>
+
+	<div class="clearfix"></div>
+
+	<div class="col-sm-12 col-md-12 col-lg-12">
+          
+	    <ul class="pagination pull-right">
+
+	      <li>
+
+	        <a [routerLink]="['/artists',prevPage]">&laquo;</a>
+	        <a [routerLink]="['/artists',nextPage]">&raquo;</a>
+
+	      </li>
+
+	    </ul>
+
+	</div>
+
+	<br />
+
+  	<div class="clearfix">
+    
+  	</div>
+
+  	<div class="artists col-sm-12 col-md-12 col-lg-12" *ngIf="identity">
+
+    	<ul class="songs-list"> 
+
+      		<li *ngFor="let song of songs">
+
+      			<div class="wrapper">
+
+      				<img *ngIf="album.image != 'null'" src="{{url + 'get_image_album/' + album.image}}" class="avatar-song">
+	        	
+	        		<span class="glyphicon glyphicon-play" (click)="onPlay(song)"></span>
+
+	        	</div>
+
+	        	<div class="song">
+
+		        	{{song.number}}.{{song.name}} - {{song.duration}}
+
+           			<a [routerLink]="['/song-edit',song._id]" class="btn btn-success" *ngIf="identity && user.role == 'ROLE_ADMIN'">Editar</a>
+
+		            <a (click)="borrarCancion(song._id)" class="btn btn-danger" *ngIf="identity && user.role == 'ROLE_ADMIN'">Eliminar</a> 
+
+	        	</div>
+
+	        	<br />
+
+      		</li>
+
+      		<div class="clearfix"></div>
+
+    	</ul>
+
+    </div>
+
+</div>

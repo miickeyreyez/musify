@@ -1,0 +1,115 @@
+<div *ngIf="identity && user.role == 'ROLE_ADMIN'" class="central col-lg-12 text-center">
+	
+  <h1>
+    {{title}}
+  </h1>
+
+  	<!-- Formulario-->
+	<div class="col-sm-12">
+	
+		<div *ngIf="alertMessage">
+	     
+	    	<div class="alert alert-info">
+	     
+	    	{{alertMessage}}
+	   
+	    	</div>
+	      
+	    </div>
+
+	</div>
+
+	<form #formSong="ngForm" (ngSubmit)="onSubmit()" class="form-horizontal">
+      
+	    <div class="form-group">
+
+	    	<label for="textinput" class="control-label col-sm-2">Nombre</label>
+
+	      	<div class="col-sm-10">
+
+		        <!-- Directiva de atributo y binding -->
+		        <input type="text" #nombre="ngModel" name="ac-nombre" [(ngModel)]="song.name" class="form-control" id="ac-nombre" placeholder="Nombre" required>
+		            
+		        <span *ngIf="(!nombre.valid && nombre.touched) || !nombre.empty && nombre.untouched">
+		          El nombre de la canción es obligatorio.
+		        </span>
+	          
+	      	</div>
+
+	   	</div>
+
+	   	<div class="form-group">
+
+	    	<label for="textinput" class="control-label col-sm-2">Duración</label>
+
+	      	<div class="col-sm-10">
+
+		        <!-- Directiva de atributo y binding -->
+		        <input type="text" #duracion="ngModel" name="ac-duracion" [(ngModel)]="song.duration" class="form-control" id="ac-duracion" placeholder="Duración" required>
+		            
+		        <span *ngIf="(!duracion.valid && duracion.touched) || !duracion.empty && duracion.untouched">
+		          La duración de la canción es obligatoria.
+		        </span>
+	          
+	      	</div>
+
+	   	</div>
+
+	   	<div class="form-group">
+
+	    	<label for="textinput" class="control-label col-sm-2">Número de canción</label>
+
+	      	<div class="col-sm-10">
+
+		        <!-- Directiva de atributo y binding -->
+		        <input type="text" #numero="ngModel" name="ac-numero" [(ngModel)]="song.number" class="form-control" id="ac-numero" placeholder="Pista" required>
+		            
+		        <span *ngIf="(!numero.valid && numero.touched) || !numero.empty && numero.untouched">
+		          El número de la canción es obligatorio.
+		        </span>
+	          
+	      	</div>
+
+	   	</div>
+
+	   	<div *ngIf="isEdit" class="form-group">
+	      
+	    	<label for="textinput" class="control-label col-sm-2">Audio</label>
+
+	      	<div class="col-sm-10">
+	          
+	        	<input type="file" (change)="fileChangeEvent($event)"  name="ac-cancion" class="form-control" id="ac-cancion" placeholder="Pista de audio">
+
+	        	<br/>
+	          
+	        	<div *ngIf="song.file != 'null'">
+
+	        		<!--audio controls>
+	        			<source src="{{url + 'get_song/' + song.file}}" type="audio/mpeg">
+	        				El navegador web no soporta la reproducción de audio.
+	        		</audio-->
+
+	        		<!--Puede ponerse la propiedad autoplay-->
+	        		<audio controls id="a1" preload="auto" src="{{url + 'get_song/' + song.file}}"></audio>
+
+	        	</div>
+	      
+	      	</div>
+
+	      	<div class="text-right col-sm-12">
+	      
+	    	<button type="submit" [disabled]="!formSong.form.valid" id="ac-audio" name="ac-audio" class="btn btn-verde" aria-label="Editarar Canción">Editar Canción</button>
+	      
+	    </div>
+
+	    </div>
+
+	    <div class="text-right col-sm-12" *ngIf="!isEdit">
+	      
+	    	<button type="submit" [disabled]="!formSong.form.valid" id="ac-audio" name="ac-audio" class="btn btn-verde" aria-label="Agregar Canción">Agregar Canción</button>
+	      
+	    </div>
+
+	</form>
+	
+</div>

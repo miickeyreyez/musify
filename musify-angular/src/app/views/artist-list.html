@@ -1,0 +1,105 @@
+<div class="col-lg-12 text-center" *ngIf="identity">
+	
+  <h1 class>
+    {{titulo}}
+  </h1>
+
+</div>
+
+  <!-- Formulario-->
+  <div class="col-sm-12 col-md-12 col-lg-12">
+
+    <div *ngIf="alertMessage">
+     
+      <div class="alert alert-info">
+     
+        {{alertMessage}}
+     
+      </div>
+      
+    </div>
+
+  </div>
+
+  <div class="col-sm-12 col-md-12 col-lg-12">
+          
+    <a [routerLink]="['/artist-add']" *ngIf="identity && user.role == 'ROLE_ADMIN'" class="btn btn-success">
+
+      <span class="glyphicon glyphicon-add" aria-hidden="true">
+      </span>
+      Añadir artista {{identity.role}}
+
+    </a>
+
+  </div>
+
+  <div class="col-sm-12 col-md-12 col-lg-12">
+          
+    <ul class="pagination pull-right">
+
+      <li>
+
+        <a [routerLink]="['/artists',prevPage]">&laquo;</a>
+        <a [routerLink]="['/artists',nextPage]">&raquo;</a>
+
+      </li>
+
+    </ul>
+
+  </div>
+
+  <br />
+
+  <div class="clearfix">
+    
+  </div>
+
+  <div class="artists col-sm-12 col-md-12 col-lg-12" *ngIf="identity">
+
+    <ul class="artists-list"> 
+
+      <li *ngFor="let artist of artists">
+
+        <div class="artist-image">
+
+          <img *ngIf="artist.image != 'null'" src="{{url + 'get_image_artist/' + artist.image}}" class="artistImage"/>
+
+        </div>
+
+        <div class="artist-name">
+
+          <a [routerLink]="['/artist-detail',artist._id]">
+          
+            {{artist.name}}
+          
+          </a>
+
+          <br />
+
+          <div class="artists-options" *ngIf="identity && user.role == 'ROLE_ADMIN'" >
+
+            <a [routerLink]="['/artist-edit',artist._id]" class="btn btn-success">Editar</a>
+
+            <a (click)="borrarArtista(artist._id)" class="btn btn-danger">Eliminar</a>
+
+          </div>
+
+          <!--a (click)="onDeleteConfirm(artist._id)" class="btn btn-danger">Eliminar</a>
+
+          <div class="confirmacion" *ngIf="confirmado == artist._id">
+
+            <a (click)="onDeleteArtist(artist._id)" class="btn btn-success">Aceptar</a>
+
+            <a (click)="onCancelArtist()" class="btn btn-danger">Cancelar</a>
+
+          </div-->
+
+        </div>
+
+        <br />
+
+      </li>
+
+    </ul>
+
+  </div>
